@@ -1,0 +1,9 @@
+# But don’t ignore these
+!Makefile
+!.gitignore
+
+# Ignore executables with no extension
+# (this pattern matches any file with no dot in its name)
+*  
+!*/  
+!*.* 
