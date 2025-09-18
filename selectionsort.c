@@ -44,7 +44,7 @@ int main(void) {
     int newarr[size];
     selectionSort(arr, size, newarr); // Fills the newarr variable with the sorted version of arr.
 
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size; i++) {
         if (i == size - 1) {
             printf("%d\n", newarr[i]);
             break;
