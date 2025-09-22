@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 // Creating bool type
 #define true 1
 #define false 0
