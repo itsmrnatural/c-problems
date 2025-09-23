@@ -94,8 +94,10 @@ int main(void) {
         move(&x, &y, current);
         current++;
         if (!CAN_MOVE) {
-            printf("Wanderer was stupid enough to get struck.\n");
+            printf("Wanderer was stupid enough to get struck.\n\n");
             break;
+        } else if (current == 'Z') {
+            printf("Wanderer has finished his chronic wandering.\n\n");
         }
     }
 
