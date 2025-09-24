@@ -20,7 +20,7 @@ void initSq(int n, int magicSq[n][n]) {
 }
 
 void fillSq(int n, int magicSq[n][n]) {
-    int a = 1; // From a to n
+    int a = 1; // From a to n^2
 
     for (int i = 0, j = n / 2; a <= (n * n); a++) {
         magicSq[i][j] = a;
@@ -49,13 +49,13 @@ void fillSq(int n, int magicSq[n][n]) {
             i -= n;
         }
         if (j < 0) {
-            // j: leaves from right returns from left
-            //? Not caused but the mathematics, but the limitation of this program
+            // j: leaves from left returns from right
+            //? Not caused by the mathematics, but the limitations of this program
             j = n - 1;
         }
-
         // printf("%d -> (%d, %d)\n", a + 1, i, j);
-        // ! Logic trap (4, 0) -> (6, -1) -> (0, 4)
+
+        //! Logic trap (4, 0) -> (6, -1) -> (0, 4)
         // Fix: do not set i/j = 0, but use subtraction to remove them from out of bounds
     }
 }
