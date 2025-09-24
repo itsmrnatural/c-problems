@@ -22,7 +22,7 @@ void initSq(int n, int magicSq[n][n]) {
 void fillSq(int n, int magicSq[n][n]) {
     int a = 1; // From a to n
 
-    for (int i = 0, j = 2; a <= (n * n); a++) {
+    for (int i = 0, j = n / 2; a <= (n * n); a++) {
         magicSq[i][j] = a;
         i--, j++; // ex: (0, 3) -> (-1, 4)
 
@@ -68,7 +68,7 @@ int main(void) {
 
     int n = 0;
     scanf("%d", &n);
-    while (n % 2 == 0 || n < 0) {
+    while (n % 2 == 0 || n < 0 || n > 99) {
         printf("\nC'mon don't ruin the fun. Again! ");
         scanf("%d", &n);
     }
