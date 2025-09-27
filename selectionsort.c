@@ -29,7 +29,7 @@ void selectionSort(int *arr, int size, int *newarr) {
     for (int i = 0; i < size - 1; i++) {
         int si = findSmallest(arr, msize);
         newarr[i] = arr[si];
-        delElm(arr, &msize, si); // Deletes the smallest element from the original array.
+        delElm(arr, &msize, si);  // Deletes the smallest element from the original array.
     }
 }
 
@@ -42,7 +42,7 @@ int main(void) {
                    55, 855, 801, 445};
     int size = sizeof(arr) / sizeof(int);
     int newarr[size];
-    selectionSort(arr, size, newarr); // Fills the newarr variable with the sorted version of arr.
+    selectionSort(arr, size, newarr);  // Fills the newarr variable with the sorted version of arr.
 
     for (int i = 0; i < size; i++) {
         if (i == size - 1) {

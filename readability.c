@@ -1,9 +1,9 @@
+#include "./include/utils.h"
+
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-
-#include "./utils.h"
 
 int main(void) {
     char line[256];
@@ -35,8 +35,8 @@ int main(void) {
     float L = ((float) letters / words) * 100;
     float S = ((float) sentences / words) * 100;
 
-    float grade  = 0.0588 * L - 0.296 * S - 15.8;
-    int   rgrade = round(grade);
+    float grade = 0.0588 * L - 0.296 * S - 15.8;
+    int rgrade = round(grade);
 
     if (rgrade < 1)
         printf("Before Grade 1\n");

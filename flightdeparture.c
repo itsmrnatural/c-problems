@@ -49,8 +49,7 @@ int main(void) {
 
     printf(
         "Closest departure time is %02d:%02d %c.m., arriving at %02d:%02d %c.m.\n",
-        dep_hours, dep_mins, dep_meridian, arrv_hours, arrv_mins, arrv_meridian
-    );
+        dep_hours, dep_mins, dep_meridian, arrv_hours, arrv_mins, arrv_meridian);
 
     return 0;
 }

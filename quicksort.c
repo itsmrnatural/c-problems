@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h> // for malloc
+#include <stdlib.h>  // for malloc
 
 // forward declarations
 int *quicksort(int *arr, int size);
@@ -13,8 +13,7 @@ int main(void) {
         528, 702, 69, 641, 367, 540, 458, 942, 538, 605, 969, 175,
         236, 930, 859, 602, 276, 960, 359, 935, 816, 558, 2, 318,
         996, 952, 397, 833, 46, 138, 937, 785, 922, 186, 272, 369,
-        55, 855, 801, 445
-    };
+        55, 855, 801, 445};
 
     int size = sizeof(arr) / sizeof(int);
     int *sorted_arr = quicksort(arr, size);
@@ -27,7 +26,7 @@ int main(void) {
         }
     }
 
-    free(sorted_arr); // cleanup
+    free(sorted_arr);  // cleanup
     return 0;
 }
 
@@ -65,8 +64,7 @@ int *quicksort(int *arr, int size) {
 void partition(
     int pivot, int *arr, int size,
     int *lesser, int *greater,
-    int *lesser_size, int *greater_size
-) {
+    int *lesser_size, int *greater_size) {
     for (int i = 1; i < size; i++) {
         if (arr[i] < pivot) {
             lesser[(*lesser_size)++] = arr[i];

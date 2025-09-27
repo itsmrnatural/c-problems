@@ -20,11 +20,11 @@ void initSq(int n, int magicSq[n][n]) {
 }
 
 void fillSq(int n, int magicSq[n][n]) {
-    int a = 1; // From a to n^2
+    int a = 1;  // From a to n^2
 
     for (int i = 0, j = n / 2; a <= (n * n); a++) {
         magicSq[i][j] = a;
-        i--, j++; // ex: (0, 3) -> (-1, 4)
+        i--, j++;  // ex: (0, 3) -> (-1, 4)
 
         // Wrapping logic
         if (i < 0) {

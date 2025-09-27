@@ -21,8 +21,8 @@ void createPath(char path[10][10]) {
 }
 
 void layPath(char path[10][10]) {
-    for (int i = 0; i < 10; i++) {     // Looping thru rows
-        for (int j = 0; j < 10; j++) { // Looping thru columns
+    for (int i = 0; i < 10; i++) {      // Looping thru rows
+        for (int j = 0; j < 10; j++) {  // Looping thru columns
             printf("%c  ", path[i][j]);
         }
         printf("\n");
@@ -31,9 +31,9 @@ void layPath(char path[10][10]) {
 
 bool checkDirection(int x, int y) {
     if (!(x >= 0 && y >= 0 && x < 10 && y < 10)) {
-        return false; // Wanderer out of bounds
+        return false;  // Wanderer out of bounds
     } else if (PATH[x][y] != '.') {
-        return false; // Coordinate was already covered
+        return false;  // Coordinate was already covered
     } else {
         return true;
     }
@@ -46,7 +46,7 @@ bool canMove(int x, int y) {
     bool down = (x >= 9) || (PATH[x + 1][y] != '.');
 
     if (left && right && up && down) {
-        return false; // Wanderer is boxed in
+        return false;  // Wanderer is boxed in
     } else {
         return true;
     }
