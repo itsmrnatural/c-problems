@@ -1,0 +1,114 @@
+# .clang-format configuration file
+BasedOnStyle: LLVM
+
+# Basic formatting
+Language: Cpp  # Works for both C and C++
+Standard: c++17  # For C projects, this still works fine
+
+# Indentation
+IndentWidth: 4
+UseTab: Never
+TabWidth: 4
+ContinuationIndentWidth: 4  # Indent for line continuations
+
+# Line length
+ColumnLimit: 0  # Disable line wrapping (as you wanted)
+
+# Brace placement - FIXED SYNTAX
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: Never  # if/for/while braces stay on same line
+  AfterFunction: false
+  AfterClass: false
+  AfterStruct: false
+  AfterEnum: false
+  AfterNamespace: false
+  BeforeElse: false  # Keep "} else {" format
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+  AfterCaseLabel: false
+  BeforeWhile: false  # Keep "} while" for do-while loops
+
+# Alignment
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: None  # Changed from false
+AlignConsecutiveDeclarations: None  # Changed from false
+AlignOperands: Align  # Changed from true
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+
+# Function parameters and arguments
+BinPackArguments: true
+BinPackParameters: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllArgumentsOnNextLine: false
+
+# Spaces
+SpaceAfterCStyleCast: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInCStyleCastParentheses: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeSquareBrackets: false
+
+# Pointers and references
+PointerAlignment: Right  # int *ptr
+DerivePointerAlignment: false
+
+# Control flow
+AllowShortIfStatementsOnASingleLine: WithoutElse  # if (x) return;
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty  # Only allow {} empty functions
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+
+# Breaking and wrapping
+BreakBeforeBinaryOperators: None  # Operators at end of line
+BreakBeforeTernaryOperators: false  # ? at start of line
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
+
+# Includes
+SortIncludes: CaseSensitive  # Changed from true (deprecated)
+IncludeBlocks: Regroup  # Group system vs local headers
+
+# Comments
+ReflowComments: true
+SpacesBeforeTrailingComments: 2  # "code  // comment"
+
+# Penalties (for when ColumnLimit > 0)
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 1000000
+PenaltyReturnTypeOnItsOwnLine: 200
+
+# Modern C/C++ features
+Cpp11BracedListStyle: true  # vector<int>{1, 2, 3} not vector<int>{ 1, 2, 3 }
+FixNamespaceComments: true  # Add // namespace foo to closing braces
+
+# Preprocessor
+IndentPPDirectives: None  # Keep #define, #ifdef at column 0
+IncludeCategories:
+  - Regex: '^".*"'  # Local includes first
+    Priority: 1
+  - Regex: '^<.*\.h>'  # C system headers
+    Priority: 2
+  - Regex: '^<.*>'  # C++ system headers
+    Priority: 3
+
+# Additional useful options
+CompactNamespaces: false
+KeepEmptyLinesAtTheStartOfBlocks: false  # Remove blank lines after {
+MaxEmptyLinesToKeep: 1
+SortUsingDeclarations: true
+
+# Experimental/newer options (remove if using older clang-format)
+InsertTrailingCommas: None
+RemoveBracesLLVM: false
