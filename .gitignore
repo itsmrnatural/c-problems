@@ -11,3 +11,4 @@
 # Miscellaneous
 .DS_Store
 .vscode/
+*.dSYM/
