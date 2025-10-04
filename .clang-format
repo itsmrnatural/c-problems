@@ -55,7 +55,7 @@ SpaceBeforeAssignmentOperators: true
 SpaceBeforeSquareBrackets: false
 
 # Pointers and references
-PointerAlignment: Right  # int *ptr
+PointerAlignment: Left  # int* ptr
 DerivePointerAlignment: false
 
 # Control flow

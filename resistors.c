@@ -13,8 +13,8 @@ typedef enum {
     WHITE
 } resistor_band_t;
 
-int color_code(resistor_band_t color);
-resistor_band_t *colors(void);
+int color_code(resistor_band_t color1, resistor_band_t color2);
+resistor_band_t* colors(void);
 
 // File starts here
 
@@ -24,11 +24,11 @@ int main(void) {
     return 0;
 }
 
-int color_code(resistor_band_t color) {
-    return color;
+int color_code(resistor_band_t color1, resistor_band_t color2) {
+    return color1 * 10 + color2;
 }
 
-resistor_band_t *colors(void) // This means this function returns a pointer to the resistor_band_t "type".
+resistor_band_t* colors(void)  // This means this function returns a pointer to the resistor_band_t "type".
 {
     return resistorColors;
 }

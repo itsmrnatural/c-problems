@@ -5,14 +5,14 @@
 #include <ctype.h>
 #include <stdio.h>
 
-void delElm(int *arr, int *size, int index) {
+void delElm(int* arr, int* size, int index) {
     for (int i = index; i < *size - 1; i++) {
         arr[i] = arr[i + 1];
     }
     (*size)--;
 }
 
-int findSmallest(int *arr, int size) {
+int findSmallest(int* arr, int size) {
     int sm = arr[0];
     int si = 0;
     for (int i = 0; i < size - 1; i++) {
@@ -24,7 +24,7 @@ int findSmallest(int *arr, int size) {
     return si;
 }
 
-void selectionSort(int *arr, int size, int *newarr) {
+void selectionSort(int* arr, int size, int* newarr) {
     int msize = size;
     for (int i = 0; i < size - 1; i++) {
         int si = findSmallest(arr, msize);

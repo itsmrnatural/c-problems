@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void formatTime(int minutes, int *hours, int *mins, char *meridian) {
+void formatTime(int minutes, int* hours, int* mins, char* meridian) {
     // Convert minutes since midnight to 12-hour format
     *hours = minutes / 60;
     *mins = minutes % 60;

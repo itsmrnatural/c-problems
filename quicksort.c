@@ -2,9 +2,9 @@
 #include <stdlib.h>  // for malloc
 
 // forward declarations
-int *quicksort(int *arr, int size);
-void partition(int pivot, int *arr, int size, int *lesser, int *greater, int *lesser_size, int *greater_size);
-int *concat(int *left, int left_size, int pivot, int *right, int right_size);
+int* quicksort(int* arr, int size);
+void partition(int pivot, int* arr, int size, int* lesser, int* greater, int* lesser_size, int* greater_size);
+int* concat(int* left, int left_size, int pivot, int* right, int right_size);
 
 int main(void) {
     int arr[64] = {
@@ -16,7 +16,7 @@ int main(void) {
         55, 855, 801, 445};
 
     int size = sizeof(arr) / sizeof(int);
-    int *sorted_arr = quicksort(arr, size);
+    int* sorted_arr = quicksort(arr, size);
 
     for (int i = 0; i < size; i++) {
         if (i == size - 1) {
@@ -31,28 +31,28 @@ int main(void) {
 }
 
 // does recursion, delegates work
-int *quicksort(int *arr, int size) {
+int* quicksort(int* arr, int size) {
     if (size < 2) {
-        int *base = malloc(size * sizeof(int));
+        int* base = malloc(size * sizeof(int));
         for (int i = 0; i < size; i++)
             base[i] = arr[i];
         return base;
     }
 
     int pivot = arr[0];
-    int *lesser = malloc(size * sizeof(int));
-    int *greater = malloc(size * sizeof(int));
+    int* lesser = malloc(size * sizeof(int));
+    int* greater = malloc(size * sizeof(int));
     int lesser_size = 0, greater_size = 0;
 
     partition(pivot, arr, size, lesser, greater, &lesser_size, &greater_size);
 
-    int *sorted_lesser = quicksort(lesser, lesser_size);
-    int *sorted_greater = quicksort(greater, greater_size);
+    int* sorted_lesser = quicksort(lesser, lesser_size);
+    int* sorted_greater = quicksort(greater, greater_size);
 
     free(lesser);
     free(greater);
 
-    int *result = concat(sorted_lesser, lesser_size, pivot, sorted_greater, greater_size);
+    int* result = concat(sorted_lesser, lesser_size, pivot, sorted_greater, greater_size);
 
     free(sorted_lesser);
     free(sorted_greater);
@@ -62,9 +62,9 @@ int *quicksort(int *arr, int size) {
 
 // does *only* splitting
 void partition(
-    int pivot, int *arr, int size,
-    int *lesser, int *greater,
-    int *lesser_size, int *greater_size) {
+    int pivot, int* arr, int size,
+    int* lesser, int* greater,
+    int* lesser_size, int* greater_size) {
     for (int i = 1; i < size; i++) {
         if (arr[i] < pivot) {
             lesser[(*lesser_size)++] = arr[i];
@@ -75,9 +75,9 @@ void partition(
 }
 
 // glues left + pivot + right
-int *concat(int *left, int left_size, int pivot, int *right, int right_size) {
+int* concat(int* left, int left_size, int pivot, int* right, int right_size) {
     int total = left_size + 1 + right_size;
-    int *out = malloc(total * sizeof(int));
+    int* out = malloc(total * sizeof(int));
 
     int k = 0;
     for (int i = 0; i < left_size; i++)

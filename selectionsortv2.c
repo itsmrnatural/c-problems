@@ -9,7 +9,7 @@
 /// @brief Sorts the array in ascending order using Selection Sort.
 /// @param arr Array to sort.
 /// @param size Number of elements in the array.
-void selectionSort(int *arr, int size) {
+void selectionSort(int* arr, int size) {
     for (int i = 0; i < size - 1; i++) {
         int minIndex = i;
         // Find index of smallest element from i..end
