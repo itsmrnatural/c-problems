@@ -6,7 +6,7 @@
 #define MAX_SIZE 16
 
 // Global variables
-int STACK[MAX_SIZE] = {'.'};
+int STACK[MAX_SIZE] = {0};
 int TOP = -1;  // Need to start with -1 cause the first element pushed will be indexed 0.
 int RESULT = 1;
 
@@ -134,7 +134,7 @@ int pop(void) {
     }
 
     int num = STACK[TOP];
-    STACK[TOP] = '.';
+    STACK[TOP] = 0;
     TOP--;
     // printf("Popped %d.\n", num);
     return num;
