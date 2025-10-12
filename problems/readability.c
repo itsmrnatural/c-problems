@@ -1,12 +1,14 @@
-#include "./include/utils.h"
+#include "../include/utils.h"
 
 #include <ctype.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
 
+#define LINE_BUFFER_SIZE 256
+
 int main(void) {
-    char line[256];
+    char line[LINE_BUFFER_SIZE];
     printf("Line to be graded:\n");
     readline(line, sizeof(line));
 
@@ -29,11 +31,15 @@ int main(void) {
             }
         }
     }
-    if (in_word)
-        words++;  // last word
+    if (in_word) words++;  // last word
 
-    float L = ((float) letters / words) * 100;
-    float S = ((float) sentences / words) * 100;
+    if (words == 0) {
+        printf("Error: No words found in the input.\n");
+        return 1;
+    }
+
+    float L = ((float) letters / (float) words) * 100;
+    float S = ((float) sentences / (float) words) * 100;
 
     float grade = 0.0588 * L - 0.296 * S - 15.8;
     int rgrade = round(grade);
