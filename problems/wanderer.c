@@ -1,12 +1,7 @@
-// #include <stdbool.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-// Creating bool type
-#define true 1
-#define false 0
-#define bool int
 
 // Global variables
 char PATH[10][10];
@@ -40,12 +35,12 @@ bool checkDirection(int x, int y) {
 }
 
 bool canMove(int x, int y) {
-    bool left = (y <= 0) || (PATH[x][y - 1] != '.');
-    bool right = (y >= 9) || (PATH[x][y + 1] != '.');
-    bool up = (x <= 0) || (PATH[x - 1][y] != '.');
-    bool down = (x >= 9) || (PATH[x + 1][y] != '.');
+    bool canLeft = (y > 0) && (PATH[x][y - 1] == '.');
+    bool canRight = (y < 9) && (PATH[x][y + 1] == '.');
+    bool canUp = (x > 0) && (PATH[x - 1][y] == '.');
+    bool canDown = (x < 9) && (PATH[x + 1][y] == '.');
 
-    if (left && right && up && down) {
+    if (!canLeft && !canRight && !canUp && !canDown) {
         return false;  // Wanderer is boxed in
     } else {
         return true;
