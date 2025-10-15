@@ -15,7 +15,6 @@ int alreadyexists(int num) {
         if (num == seenarr[i]) {
             return 1;
         }
-        continue;
     }
     return 0;
 }
@@ -50,7 +49,7 @@ int ishappy(int num) {
                 return 0;
             }
 
-            //* Unexpected recursion
+            // Recursively check if the new sum is happy
             return ishappy(sum);
         }
     }
@@ -59,7 +58,10 @@ int ishappy(int num) {
 int main(void) {
     printf("Enter the number: ");
     int num = 0;
-    scanf("%d", &num);
+    if (scanf("%d", &num) != 1) {
+        printf("Invalid input. Please enter a valid integer.\n");
+        return 1;
+    }
 
     if (ishappy(num)) {
         printf("This number is happy.\n");
