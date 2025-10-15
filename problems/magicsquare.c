@@ -50,13 +50,15 @@ void fillSq(int n, int magicSq[n][n]) {
         }
         if (j < 0) {
             // j: leaves from left returns from right
-            //? Not caused by the mathematics, but the limitations of this program
+            //? Not caused by the mathematics, but the limitations of this
+            // program
             j = n - 1;
         }
         // printf("%d -> (%d, %d)\n", a + 1, i, j);
 
         //! Logic trap (4, 0) -> (6, -1) -> (0, 4)
-        // Fix: do not set i/j = 0, but use subtraction to remove them from out of bounds
+        // Fix: do not set i/j = 0, but use subtraction to remove them from out
+        // of bounds
     }
 }
 

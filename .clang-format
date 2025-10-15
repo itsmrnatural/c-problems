@@ -12,7 +12,7 @@ TabWidth: 4
 ContinuationIndentWidth: 4  # Indent for line continuations
 
 # Line length
-ColumnLimit: 80  # Disable line wrapping (as you wanted)
+ColumnLimit: 0  # Disable line wrapping (as you wanted)
 
 # Brace placement - FIXED SYNTAX
 BreakBeforeBraces: Custom
