@@ -4,8 +4,8 @@
 #include <time.h>
 
 // Global variables
-char PATH[10][10];
-bool CAN_MOVE = true;
+char path[10][10];
+bool can_move = true;
 
 void createPath(char path[10][10]) {
     for (int i = 0; i < 10; i++) {
@@ -27,7 +27,7 @@ void layPath(char path[10][10]) {
 bool checkDirection(int x, int y) {
     if (!(x >= 0 && y >= 0 && x < 10 && y < 10)) {
         return false;  // Wanderer out of bounds
-    } else if (PATH[x][y] != '.') {
+    } else if (path[x][y] != '.') {
         return false;  // Coordinate was already covered
     } else {
         return true;
@@ -35,10 +35,10 @@ bool checkDirection(int x, int y) {
 }
 
 bool canMove(int x, int y) {
-    bool canLeft = (y > 0) && (PATH[x][y - 1] == '.');
-    bool canRight = (y < 9) && (PATH[x][y + 1] == '.');
-    bool canUp = (x > 0) && (PATH[x - 1][y] == '.');
-    bool canDown = (x < 9) && (PATH[x + 1][y] == '.');
+    bool canLeft = (y > 0) && (path[x][y - 1] == '.');
+    bool canRight = (y < 9) && (path[x][y + 1] == '.');
+    bool canUp = (x > 0) && (path[x - 1][y] == '.');
+    bool canDown = (x < 9) && (path[x + 1][y] == '.');
 
     if (!canLeft && !canRight && !canUp && !canDown) {
         return false;  // Wanderer is boxed in
@@ -47,7 +47,7 @@ bool canMove(int x, int y) {
     }
 }
 
-void move(int* x, int* y, char plate) {
+void move(int* x, int* y, char marker) {
     // 0 - Left, 1 - Down, 2 - Up, 3 - Right
 
     int tx = *x, ty = *y;
@@ -73,14 +73,14 @@ void move(int* x, int* y, char plate) {
         }
     }
 
-    CAN_MOVE = canMove(tx, ty);
+    can_move = canMove(tx, ty);
     *x = tx, *y = ty;
-    PATH[*x][*y] = plate;
+    path[*x][*y] = marker;
 }
 
 int main(void) {
     srand(time(NULL));
-    createPath(PATH);
+    createPath(path);
 
     int x = rand() % 10, y = rand() % 10;
     char current = 'A';
@@ -88,7 +88,7 @@ int main(void) {
     while (current <= 'Z') {
         move(&x, &y, current);
         current++;
-        if (!CAN_MOVE) {
+        if (!can_move) {
             printf("Wanderer was stupid enough to get struck.\n\n");
             break;
         } else if (current == 'Z') {
@@ -96,6 +96,6 @@ int main(void) {
         }
     }
 
-    layPath(PATH);
+    layPath(path);
     return 0;
 }
