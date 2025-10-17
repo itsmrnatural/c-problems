@@ -8,7 +8,6 @@
 // Global variables
 int STACK[MAX_SIZE] = {0};
 int TOP = -1;  // Need to start with -1 cause the first element pushed will be indexed 0.
-int RESULT = 1;
 
 // Function prototypes
 void push(int operand);
@@ -49,7 +48,7 @@ void hopper(char ch) {
         evaluate(ch);
     } else {
         printf("Bad character entered. Program terminated.\n");
-        exit(EXIT_SUCCESS);
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -72,8 +71,8 @@ bool is_valid_operator(char ch) {
 }
 
 void show_result(void) {
-    RESULT = STACK[TOP];
-    printf("Value of expression: %d\n", RESULT);
+    int result = STACK[TOP];
+    printf("Value of expression: %d\n", result);
     read();
 }
 
@@ -130,7 +129,6 @@ void push(int operand) {
 int pop(void) {
     if (TOP < 0) {
         stack_underflow();
-        return 0;
     }
 
     int num = STACK[TOP];
