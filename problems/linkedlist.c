@@ -30,9 +30,9 @@ bool compare(const char*, const char*);
 
 /// Node specific
 void print_nodes(node_t*);
-node_t create_node(char*);
-node_t* insert_at_head(node_t*, node_t);
-node_t* insert_at_tail(node_t*, node_t);
+node_t* create_node(char*);
+node_t* insert_at_head(node_t*, node_t*);
+node_t* insert_at_tail(node_t*, node_t*);
 node_t* search_by_value(node_t*, const char*);
 node_t* delete_by_value(node_t*, const char*);
 node_t* prune_all_nodes(node_t*);
@@ -76,29 +76,35 @@ void print_nodes(node_t* head_ptr) {
     printf("\n");
 }
 
-node_t create_node(char* value) {
-    //* Returns the newly created node
-    node_t new_node = {.value = value, .next = NULL};
+node_t* create_node(char* value) {
+    //* Returns a pointer to the newly created node
+    node_t* new_node = (node_t*) malloc(sizeof(node_t));
+    if (!new_node) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    new_node->value = value;
+    new_node->next = NULL;
     return new_node;
 }
 
-node_t* insert_at_head(node_t* head_ptr, node_t node) {
-    //* Returns the pointer to head node
+node_t* insert_at_head(node_t* head_ptr, node_t* node) {
+    //* Returns the head pointer
     if (!head_ptr) {
-        head_ptr = &node;
+        head_ptr = node;
         return head_ptr;
     }
 
     // Head pointer already points to a node move it by one.
-    node.next = head_ptr;
-    head_ptr = &node;
+    node->next = head_ptr;
+    head_ptr = node;
     return head_ptr;
 }
 
-node_t* insert_at_tail(node_t* head_ptr, node_t node) {
+node_t* insert_at_tail(node_t* head_ptr, node_t* node) {
     //* Returns the pointer to the current inserted node (Useless?)
     if (!head_ptr) {
-        head_ptr = &node;
+        head_ptr = node;
         return head_ptr;
     }
 
@@ -107,7 +113,7 @@ node_t* insert_at_tail(node_t* head_ptr, node_t node) {
         current_ptr = current_ptr->next;
     }
 
-    current_ptr = &node;
+    current_ptr = node;
     return current_ptr;
 }
 
@@ -146,5 +152,4 @@ node_t* delete_by_value(node_t* head_ptr, const char* value) {
 }
 
 node_t* prune_all_nodes(node_t* head_ptr) {
-
 }
