@@ -1,42 +1,12 @@
+#include "../include/linkedlist.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// Type definations
-typedef struct node_t {
-    char* value;
-    /// For the next to be declared as a node_t pointer
-    //  we need to name the struct, no anonymous naming.
-    struct node_t* next;
-} node_t;
-// typedef node_t* node_ptr; // Unused!
-
-// Function Prototypes
-bool compare(const char*, const char*);
-
-void print_nodes(node_t*);
-node_t* create_node(char*);
-node_t* insert_at_head(node_t*, node_t*);
-node_t* insert_at_tail(node_t*, node_t*);
-node_t* search_by_value(node_t*, const char*);
-node_t* delete_by_value(node_t*, const char*);
-void prune_all_nodes(node_t*);
-
-// Function Definations
-int main(void) {
-    node_t* head_ptr = NULL;  // [HEAD] -> [NULL]
-
-    printf("Linked List Program Simulation\n");
-    printf("\t1. Print all nodes\n");
-    printf("\t2. Insert at head\n");
-    printf("\t3. Insert at tail\n");
-    printf("\t4. Search by value\n");
-    printf("\t5. Delete by value\n");
-    printf("\t6. Prune all nodes\n");
-    printf("\t7. Exit\n");
-    // ... to be made ...
-    return 0;
+void err_list_empty(void) {
+    fprintf(stderr, "Error: The linked list is empty.");
 }
 
 bool compare(const char* value1, const char* value2) {
@@ -47,7 +17,7 @@ bool compare(const char* value1, const char* value2) {
 void print_nodes(node_t* head_ptr) {
     //* Prints all nodes in (value1 -> value2 -> ...) form
     if (!head_ptr) {
-        //
+        err_list_empty();
         return;
     }
 
@@ -106,7 +76,7 @@ node_t* insert_at_tail(node_t* head_ptr, node_t* node) {
 node_t* search_by_value(node_t* head_ptr, const char* value) {
     //* Returns pointer to the node with this value, else returns NULL pointer
     if (!head_ptr) {
-        // Handle empty linked list error.
+        err_list_empty();
         return NULL;
     }
 
@@ -126,7 +96,7 @@ node_t* delete_by_value(node_t* head_ptr, const char* value) {
     //* Returns pointer to the element before the element deleted
     //* Returns NULL pointer if operation failed
     if (!head_ptr) {
-        //
+        err_list_empty();
         return NULL;
     }
 
@@ -150,7 +120,7 @@ node_t* delete_by_value(node_t* head_ptr, const char* value) {
 
 void prune_all_nodes(node_t* head_ptr) {
     if (!head_ptr) {
-        //
+        err_list_empty();
         return;
     }
 
