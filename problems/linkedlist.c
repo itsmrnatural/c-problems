@@ -81,7 +81,6 @@ node_t* search_by_value(node_t* head_ptr, const char* value) {
     }
 
     node_t* current_node = head_ptr;
-
     while (current_node != NULL) {
         if (compare(current_node->value, value)) {
             return current_node;
@@ -93,6 +92,7 @@ node_t* search_by_value(node_t* head_ptr, const char* value) {
 }
 
 node_t* delete_by_value(node_t* head_ptr, const char* value) {
+    //! WIP: Bugs
     //* Returns pointer to the element before the element deleted
     //* Returns NULL pointer if operation failed
     if (!head_ptr) {
@@ -107,7 +107,7 @@ node_t* delete_by_value(node_t* head_ptr, const char* value) {
         if (compare(current_node->value, value)) {
             // This connects the previous node to the next node
             // Disconnecting the current one
-            prev_node = current_node->next;
+            prev_node->next = current_node->next;
             free(current_node);
             return prev_node;
         }
