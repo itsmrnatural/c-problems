@@ -58,18 +58,18 @@ node_t* insert_at_head(node_t* head_ptr, node_t* node) {
 }
 
 node_t* insert_at_tail(node_t* head_ptr, node_t* node) {
-    //* Returns the pointer to the current inserted node (Useless?)
+    //* Returns the pointer to the node before the inserted node (Useless?)
     if (!head_ptr) {
         head_ptr = node;
         return head_ptr;
     }
 
     node_t* current_ptr = head_ptr;
-    while (current_ptr != NULL) {
+    while (current_ptr->next != NULL) {
         current_ptr = current_ptr->next;
     }
 
-    current_ptr = node;
+    current_ptr->next = node;
     return current_ptr;
 }
 
