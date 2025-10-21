@@ -41,6 +41,5 @@ void guessing(void) {
             range.lower = guess + 1;
             guesses++;
         }
-
     }
 }
