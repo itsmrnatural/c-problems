@@ -1,15 +1,12 @@
 #pragma once
+
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
-static int readline(char* line, size_t size) {
-    if (size == 0 || !line) {
-        return 0;
-    }
+typedef int* (*sort_fn)(int*, int);
 
-    if (fgets(line, size, stdin)) {
-        line[strcspn(line, "\n")] = '\0';
-        return 1;
-    }
-    return 0;
-}
+// Reads line from stdin according to size
+int readline(char* line, size_t size);
+// Returns runtime of the sorting function in secs.
+double sort_runtime(sort_fn, int*, int);
