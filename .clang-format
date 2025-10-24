@@ -7,6 +7,7 @@ Standard: c++17  # For C projects, this still works fine
 
 # Indentation
 IndentWidth: 4
+IndentCaseLabels: true
 UseTab: Never
 TabWidth: 4
 ContinuationIndentWidth: 4  # Indent for line continuations
