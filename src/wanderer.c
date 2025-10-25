@@ -55,18 +55,18 @@ void move(int* x, int* y, char marker) {
     while (!valid) {
         int direction = rand() % 4;
         switch (direction) {
-        case 0:
-            ty--;
-            break;
-        case 1:
-            tx++;
-            break;
-        case 2:
-            tx--;
-            break;
-        case 3:
-            ty++;
-            break;
+            case 0:
+                ty--;
+                break;
+            case 1:
+                tx++;
+                break;
+            case 2:
+                tx--;
+                break;
+            case 3:
+                ty++;
+                break;
         }
         if (!(valid = checkDirection(tx, ty))) {
             tx = *x, ty = *y;
