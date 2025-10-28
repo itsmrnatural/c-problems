@@ -1,3 +1,5 @@
+#include "../include/hashing.h"
+
 #include <stdint.h>
 
 /*
@@ -8,7 +10,7 @@ standard in FNV-1a hash for 64-bit systems.
 #define FNV_PRIME 1099511628211UL
 
 // Return 64-bit FNV-1a hash for key (NUL-terminated)
-static uint64_t hash(const char* key) {
+uint64_t fnv1a_hash(const char* key) {
     uint64_t hashed = FNV_OFFSET;
     for (const char* p = key; *p; p++) {
         hashed ^= (uint64_t) (unsigned char) *p;
