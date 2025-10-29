@@ -2,7 +2,6 @@
 
 #include <math.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 
 #define SQRT_EPSILON 0.00001f  // degree of precision
@@ -19,7 +18,7 @@ float sqrt_srch(float num) {
         high = 1.0f;  // root 0.025 = 0.5
     }
 
-    float mid;
+    double mid;
     while ((high - low) > epsilon) {
         mid = low + ((high - low) / 2.0f);
         if ((mid * mid) > num) {
@@ -48,11 +47,12 @@ float sqrt_quake(float num) {
 
     float epsilon = SQRT_EPSILON;
     double prev, droot = (double) root;
+    droot = droot * (1.5f - 0.5f * num * droot * droot); // NR once
 
-    do {
-        prev = droot;
-        droot = droot * (1.5f - 0.5f * num * droot * droot);
-    } while (fabs(droot - prev) > epsilon);
+    // do {
+    //     prev = droot;  // performing Newton-Raphson now
+    //     droot = droot * (1.5f - 0.5f * num * droot * droot);
+    // } while (fabs(droot - prev) > epsilon);
 
     return num * droot;
 }
