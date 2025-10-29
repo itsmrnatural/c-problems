@@ -40,7 +40,8 @@ float sqrt_quake(float num) {
     memcpy(&bits, &num, 4);  // copy 4 bytes from address of num to i
     uint32_t quake = 0x5f3759DF;
 
-    // log(num) = num + error (quake)
+    // This line applies a magic constant and bit manipulation to approximate the inverse square root,
+    // exploiting properties of floating-point representation for a fast initial guess.
     float root;
     bits = quake - (bits >> 1);
     memcpy(&root, &bits, 4);
@@ -68,12 +69,12 @@ float sqrt_nwtn(float num) {
     memcpy(&guess, &bits, 4);
 
     double epsilon = SQRT_EPSILON;  // degree of precision
-    double i, j = guess;
+    double prev, curr = guess;
 
     do {
-        i = j;  // i is j before NR iteration
-        j = 0.5f * (i + (num / i));
-    } while (fabs(i - j) > epsilon);
+        prev = curr;  // prev of curr before NR iteration
+        curr = 0.5f * (prev + (num / prev));
+    } while (fabs(prev - curr) > epsilon);
 
-    return j;
+    return curr;
 }
