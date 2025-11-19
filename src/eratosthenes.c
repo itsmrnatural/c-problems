@@ -61,7 +61,6 @@ long* naive(long num) {
     Stores found primes in the 'sieved' array and returns the count of primes found.
 */
 bool* eratosthenes(long num) {
-
     if (num < 2) return NULL;
 
     bool* primetable = (bool*) calloc(num, sizeof(bool));

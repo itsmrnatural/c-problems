@@ -39,15 +39,13 @@ float sqrt_quake(float num) {
     memcpy(&bits, &num, 4);  // copy 4 bytes from address of num to i
     uint32_t quake = 0x5f3759DF;
 
-    // This line applies a magic constant and bit manipulation to approximate the inverse square root,
-    // exploiting properties of floating-point representation for a fast initial guess.
     float root;
     bits = quake - (bits >> 1);
     memcpy(&root, &bits, 4);
 
     float epsilon = SQRT_EPSILON;
     double prev, droot = (double) root;
-    droot = droot * (1.5f - 0.5f * num * droot * droot); // NR once
+    droot = droot * (1.5f - 0.5f * num * droot * droot);  // NR once
 
     // do {
     //     prev = droot;  // performing Newton-Raphson now
