@@ -1,10 +1,13 @@
 #include <math.h>
 #include <stdio.h>
 
+// Maximum number of decimal digits in a long value
+#define MAX_DIGITS 16
+
 int isarmstrong(long num) {
     int place;
-    int digits[16];
-    int tnum = num;
+    int digits[MAX_DIGITS];
+    long tnum = num;
 
     for (place = 0; tnum != 0; place++) {
         digits[place] = tnum % 10;
