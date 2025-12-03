@@ -11,10 +11,7 @@ int* quicksort(int* arr, int size);
 void partition(int pivot, int* arr, int size, int* lesser, int* greater, int* lesser_size, int* greater_size);
 int* concat(int* left, int left_size, int pivot, int* right, int right_size);
 
-void partition(
-    int pivot, int* arr, int size,
-    int* lesser, int* greater,
-    int* lesser_size, int* greater_size) {
+void partition(int pivot, int* arr, int size, int* lesser, int* greater, int* lesser_size, int* greater_size) {
     for (int i = 1; i < size; i++) {
         if (arr[i] < pivot) {
             lesser[(*lesser_size)++] = arr[i];

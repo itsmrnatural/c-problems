@@ -27,8 +27,7 @@ int partition(int* arr, int low, int high) {
             j--;
         } while (arr[j] > pivot);
 
-        if (i >= j)
-            return j;
+        if (i >= j) return j;
 
         swap(&arr[i], &arr[j]);
     }
