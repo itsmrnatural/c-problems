@@ -2,9 +2,11 @@
 
 These are genuinely the next step up from wanderer.c and magicsquare.c. Not easy, but doable if you think through them.
 
+> **Legend:** ✅ Done | 🔄 In Progress | 📋 To Do
+
 ---
 
-## 1. **Random Maze Generator** (Recursive Backtracking with Structure)
+## 1. 📋 **Random Maze Generator** (Recursive Backtracking with Structure)
 
 **Difficulty:** Medium | **Time to solve:** 2-4 hours | **Concepts:** Backtracking, 2D grids, randomness
 
@@ -12,6 +14,7 @@ These are genuinely the next step up from wanderer.c and magicsquare.c. Not easy
 Generate a random maze (not solve it yet, just generate). Use recursive backtracking similar to wanderer.c, but more structured.
 
 **Requirements:**
+
 - Start with a full grid of walls
 - Carve passages using random backtracking (pick random unvisited neighbor, move there, repeat)
 - Stack or recursion to backtrack when stuck
@@ -19,11 +22,13 @@ Generate a random maze (not solve it yet, just generate). Use recursive backtrac
 - Should create one connected path through the maze
 
 **Think about:**
+
 - How is this similar to wanderer.c? (both use backtracking + randomness)
 - How is it different? (maze needs structure, not just random marks)
 - How do you track which cells you've visited?
 
 **Example Output:**
+
 ```
 # # # # # # # # # #
 # . . . . # . . . #
@@ -38,7 +43,7 @@ Generate a random maze (not solve it yet, just generate). Use recursive backtrac
 
 ---
 
-## 2. **Bubble Sort Visualizer with Stats** (Sorting + Analysis)
+## 2. 📋 **Bubble Sort Visualizer with Stats** (Sorting + Analysis)
 
 **Difficulty:** Easy-Medium | **Time to solve:** 1-2 hours | **Concepts:** Sorting, algorithm analysis
 
@@ -46,6 +51,7 @@ Generate a random maze (not solve it yet, just generate). Use recursive backtrac
 Implement bubble sort (yes, the "bad" sort) BUT add detailed analysis of what's happening.
 
 **Requirements:**
+
 - Implement classic bubble sort
 - Count comparisons (how many times you compare two elements)
 - Count swaps (how many times you swap)
@@ -55,11 +61,13 @@ Implement bubble sort (yes, the "bad" sort) BUT add detailed analysis of what's 
 - Calculate total operations for each case
 
 **Think about:**
+
 - Why does bubble sort do more work on some arrays than others?
 - Can you optimize it (early exit if no swaps in a pass)?
 - What's the difference between best case / worst case?
 
 **Example Output:**
+
 ```
 Original: [5, 2, 8, 1, 9]
 
@@ -73,7 +81,7 @@ Total Comparisons: 16, Total Swaps: 5
 
 ---
 
-## 3. **Perfect Number Finder** (Number Theory)
+## 3. 📋 **Perfect Number Finder** (Number Theory)
 
 **Difficulty:** Easy-Medium | **Time to solve:** 1-2 hours | **Concepts:** Loops, divisibility, algorithms
 
@@ -81,17 +89,20 @@ Total Comparisons: 16, Total Swaps: 5
 Find all perfect numbers up to a given limit. A perfect number equals the sum of its proper divisors (divisors excluding the number itself).
 
 **Requirements:**
+
 - Find all perfect numbers up to N (e.g., N=10000)
 - For each perfect number, show its divisors
 - Count how many you found
 - Optimize: Don't check every number naively — think about constraints
 
 **Think about:**
+
 - What's a naive approach? (check every number, sum divisors)
 - How can you optimize finding divisors? (hint: you only need to check up to sqrt(n))
 - Are perfect numbers rare or common?
 
 **Example Output:**
+
 ```
 Perfect numbers up to 10000:
 6 = 1 + 2 + 3
@@ -104,7 +115,7 @@ Total found: 4
 
 ---
 
-## 4. **Pascal's Triangle Generator** (Combinatorics + 2D Arrays)
+## 4. 📋 **Pascal's Triangle Generator** (Combinatorics + 2D Arrays)
 
 **Difficulty:** Easy-Medium | **Time to solve:** 1-2 hours | **Concepts:** 2D arrays, combinatorics
 
@@ -112,17 +123,20 @@ Total found: 4
 Generate Pascal's triangle up to N rows. Each number is the sum of the two numbers above it.
 
 **Requirements:**
+
 - Generate N rows of Pascal's triangle
 - Print it nicely formatted (centered or aligned)
 - Store it in a 2D array
 - Find/highlight specific properties (e.g., find row with sum = 2^n)
 
 **Think about:**
+
 - How do you represent a triangle in a 2D array?
 - How do you handle the edge cases (first and last elements of each row)?
 - Can you use the previous row to calculate the next row?
 
 **Example Output (7 rows):**
+
 ```
       1
      1 1
@@ -135,7 +149,7 @@ Generate Pascal's triangle up to N rows. Each number is the sum of the two numbe
 
 ---
 
-## 5. **Fibonacci Sequence with Memoization** (Dynamic Programming Intro)
+## 5. 📋 **Fibonacci Sequence with Memoization** (Dynamic Programming Intro)
 
 **Difficulty:** Medium | **Time to solve:** 2-3 hours | **Concepts:** Recursion, caching, optimization
 
@@ -143,6 +157,7 @@ Generate Pascal's triangle up to N rows. Each number is the sum of the two numbe
 Implement Fibonacci in three ways and compare performance.
 
 **Requirements:**
+
 - **Version 1:** Simple recursion (slow but shows the idea)
 - **Version 2:** Memoization (cache results, much faster)
 - **Version 3:** Iterative (bottom-up, fastest)
@@ -150,11 +165,13 @@ Implement Fibonacci in three ways and compare performance.
 - Show how memoization helps
 
 **Think about:**
+
 - Why is simple recursion so slow? (recalculating same values)
 - How do you store results you've already calculated?
 - Why is iteration faster than recursion?
 
 **Example Output:**
+
 ```
 fib(40) = 102334155
 
@@ -165,7 +182,7 @@ Method 3 (Iterative):         0.0001 seconds
 
 ---
 
-## 6. **Prime Number Sieve** (Algorithms + Optimization)
+## 6. ✅ **Prime Number Sieve** (Algorithms + Optimization)
 
 **Difficulty:** Medium | **Time to solve:** 2-3 hours | **Concepts:** Sieves, bit manipulation, optimization
 
@@ -173,6 +190,7 @@ Method 3 (Iterative):         0.0001 seconds
 Find all prime numbers up to N using the Sieve of Eratosthenes. Compare with naive primality checking.
 
 **Requirements:**
+
 - Implement Sieve of Eratosthenes (efficient method)
 - Implement naive primality check (for comparison)
 - Benchmark: Find all primes up to 1,000,000
@@ -180,11 +198,13 @@ Find all prime numbers up to N using the Sieve of Eratosthenes. Compare with nai
 - Optional: Find twin primes (primes differing by 2, like 11 and 13)
 
 **Think about:**
+
 - Why is a sieve faster than checking each number individually?
 - How does the algorithm work? (mark multiples as composite)
 - Can you optimize space/time?
 
 **Example Output:**
+
 ```
 Primes up to 100:
 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97
@@ -198,7 +218,7 @@ Speedup: 8.3x faster
 
 ---
 
-## 7. **Word Frequency Counter** (File I/O + Data Structures)
+## 7. 📋 **Word Frequency Counter** (File I/O + Data Structures)
 
 **Difficulty:** Medium | **Time to solve:** 2-4 hours | **Concepts:** File I/O, arrays/structs, sorting
 
@@ -206,6 +226,7 @@ Speedup: 8.3x faster
 Read a text file, count word frequencies, and display top N most common words.
 
 **Requirements:**
+
 - Read a file line by line
 - Split lines into words (handle punctuation)
 - Count occurrences of each word (case-insensitive)
@@ -214,12 +235,14 @@ Read a text file, count word frequencies, and display top N most common words.
 - Ignore common words ("the", "a", "and", etc.)
 
 **Think about:**
+
 - How do you store words and their counts? (array of structs? dynamic array?)
 - How do you convert uppercase to lowercase?
 - How do you split a line into words?
 - How do you remove punctuation?
 
 **Example Output:**
+
 ```
 Top 10 words in file.txt:
 1. word        - 342 times
@@ -232,7 +255,7 @@ Top 10 words in file.txt:
 
 ---
 
-## 8. **Number Guessing Game with AI** (Logic + Loops)
+## 8. ✅ **Number Guessing Game with AI** (Logic + Loops)
 
 **Difficulty:** Easy-Medium | **Time to solve:** 1-2 hours | **Concepts:** Binary search, game logic
 
@@ -240,6 +263,7 @@ Top 10 words in file.txt:
 Create a guessing game where the human thinks of a number and the computer tries to guess it using binary search strategy.
 
 **Requirements:**
+
 - Computer generates guesses in range 1-1000
 - Human responds: "higher", "lower", or "correct"
 - Computer uses binary search to narrow down the number
@@ -247,12 +271,14 @@ Create a guessing game where the human thinks of a number and the computer tries
 - Validate: Detect if human is cheating (contradicting previous answers)
 
 **Think about:**
+
 - How does binary search narrow the search space?
 - What's the maximum guesses needed for 1-1000? (log2(1000) ≈ 10)
 - How do you track the search bounds?
 - How do you detect cheating?
 
 **Example Interaction:**
+
 ```
 Think of a number between 1 and 1000.
 My guess: 500
@@ -270,7 +296,7 @@ I got it in 5 guesses!
 
 ---
 
-## 9. **Simple Linked List** (Dynamic Memory + Pointers)
+## 9. ✅ **Simple Linked List** (Dynamic Memory + Pointers)
 
 **Difficulty:** Medium | **Time to solve:** 2-3 hours | **Concepts:** Pointers, dynamic memory, linked lists
 
@@ -278,6 +304,7 @@ I got it in 5 guesses!
 Implement a singly linked list with basic operations.
 
 **Requirements:**
+
 - Node structure: `value` and `next` pointer
 - Operations:
   - Insert at head
@@ -289,12 +316,14 @@ Implement a singly linked list with basic operations.
 - Test each operation thoroughly
 
 **Think about:**
+
 - How do pointers chain together?
 - What goes wrong if you don't track the head properly?
 - How do you handle edge cases (empty list, single node)?
 - How do you avoid memory leaks?
 
 **Example Usage:**
+
 ```
 list_insert_head(list, 5);
 list_insert_head(list, 3);
@@ -306,7 +335,7 @@ list_print(list);           // 3 -> 7 -> NULL
 
 ---
 
-## 10. **Matrix Operations** (2D Arrays + Math)
+## 10. ✅ **Matrix Operations** (2D Arrays + Math)
 
 **Difficulty:** Medium | **Time to solve:** 2-4 hours | **Concepts:** 2D arrays, algorithms, math
 
@@ -314,6 +343,7 @@ list_print(list);           // 3 -> 7 -> NULL
 Implement basic matrix operations: addition, multiplication, and transpose.
 
 **Requirements:**
+
 - Matrix struct (rows, cols, data)
 - Matrix addition: A + B = C
 - Matrix multiplication: A × B = C (handle dimension validation)
@@ -322,11 +352,13 @@ Implement basic matrix operations: addition, multiplication, and transpose.
 - Test with various dimensions
 
 **Think about:**
+
 - How do you validate matrix operations? (addition requires same dimensions)
 - How does matrix multiplication work? (dot product of rows and columns)
 - How do you handle invalid operations gracefully?
 
 **Example Output:**
+
 ```
 Matrix A (2x3):
 1 2 3
@@ -357,16 +389,19 @@ A^T (3x2):
 **Pick 2-3 of these based on interest:**
 
 **If you like logic/algorithms:**
+
 - Fibonacci with memoization
 - Prime sieve
 - Number guessing game
 
 **If you like data structures/memory:**
+
 - Linked list
 - Word frequency counter
 - Pascal's triangle
 
 **If you like getting things to work:**
+
 - Bubble sort visualizer
 - Perfect numbers
 - Matrix operations
