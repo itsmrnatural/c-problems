@@ -17,7 +17,7 @@ node_t* create_node(char*);
 node_t* insert_at_head(node_t*, node_t*);
 node_t* insert_at_tail(node_t*, node_t*);
 node_t* search_by_value(node_t*, const char*);
-node_t* delete_by_value(node_t*, const char*);
-void prune_all_nodes(node_t*);
+void delete_by_value(node_t**, const char*);
+void prune_all_nodes(node_t**);
 
 #endif

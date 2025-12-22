@@ -6,7 +6,7 @@
 #include <string.h>
 
 void err_list_empty(void) {
-    fprintf(stderr, "Error: The linked list is empty.");
+    fprintf(stderr, "Error: The linked list is empty.\n");
 }
 
 bool compare(const char* value1, const char* value2) {
@@ -21,13 +21,14 @@ void print_nodes(node_t* head_ptr) {
         return;
     }
 
-    node_t* current_ptr = head_ptr;
-    while (current_ptr != NULL) {
-        printf("%s", current_ptr->value);
-        if (current_ptr->next != NULL) {
+    node_t* ptr = head_ptr;
+    while (ptr != NULL) {
+        printf("%s", ptr->value);
+        if (ptr->next) {
             printf(" -> ");
         }
-        current_ptr = current_ptr->next;
+        ptr = ptr->next;
+        // ptr->next->value in the next run
     }
     printf("\n");
 }
@@ -39,7 +40,7 @@ node_t* create_node(char* value) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-    new_node->value = value;
+    new_node->value = strdup(value);
     new_node->next = NULL;
     return new_node;
 }
@@ -58,19 +59,20 @@ node_t* insert_at_head(node_t* head_ptr, node_t* node) {
 }
 
 node_t* insert_at_tail(node_t* head_ptr, node_t* node) {
-    //* Returns the pointer to the node before the inserted node (Useless?)
+    //* Returns the pointer to the node before the inserted node, or the head pointer if the list was empty
     if (!head_ptr) {
         head_ptr = node;
         return head_ptr;
     }
 
-    node_t* current_ptr = head_ptr;
-    while (current_ptr->next != NULL) {
-        current_ptr = current_ptr->next;
+    node_t* active_node = head_ptr;
+    while (active_node->next) {
+        // walking the linked list
+        active_node = active_node->next;
     }
 
-    current_ptr->next = node;
-    return current_ptr;
+    active_node->next = node;
+    return active_node;
 }
 
 node_t* search_by_value(node_t* head_ptr, const char* value) {
@@ -80,53 +82,59 @@ node_t* search_by_value(node_t* head_ptr, const char* value) {
         return NULL;
     }
 
-    node_t* current_node = head_ptr;
-    while (current_node != NULL) {
-        if (compare(current_node->value, value)) {
-            return current_node;
+    node_t* active_node = head_ptr;
+    while (active_node) {
+        if (compare(active_node->value, value)) {
+            return active_node;
         }
-        current_node = current_node->next;
+        active_node = active_node->next;
     }
 
     return NULL;
 }
 
-node_t* delete_by_value(node_t* head_ptr, const char* value) {
-    //! WIP: Bugs
-    //* Returns pointer to the element before the element deleted
-    //* Returns NULL pointer if operation failed
-    if (!head_ptr) {
-        err_list_empty();
-        return NULL;
-    }
-
-    node_t* prev_node = head_ptr;     // Using as a default pointer to
-    node_t* current_node = head_ptr;  // return if first node itself matches
-
-    while (current_node != NULL) {
-        if (compare(current_node->value, value)) {
-            // This connects the previous node to the next node
-            // Disconnecting the current one
-            prev_node->next = current_node->next;
-            free(current_node);
-            return prev_node;
-        }
-        prev_node = current_node;
-        current_node = current_node->next;
-    }
-
-    return NULL;
-}
-
-void prune_all_nodes(node_t* head_ptr) {
-    if (!head_ptr) {
+void delete_by_value(node_t** head_ptr, const char* value) {
+    if (!*head_ptr) {
         err_list_empty();
         return;
     }
 
-    node_t* current_ptr = head_ptr;
-    while (current_ptr != NULL) {
-        // current_ptr gets head_ptr each time
-        current_ptr = delete_by_value(current_ptr, current_ptr->value);
+    node_t* active = (*head_ptr)->next;
+    if (compare((*head_ptr)->value, value)) {
+        free((*head_ptr)->value);
+        free(*head_ptr);
+        *head_ptr = active;
+
+        return;
     }
+    node_t* previous = *head_ptr;
+
+    while (active) {
+        if (compare(active->value, value)) {
+            // This connects the previous node to the next node
+            // Disconnecting the current one
+            previous->next = active->next;
+            free(active->value);
+            free(active);
+            return;
+        }
+        previous = active;
+        active = active->next;
+    }
+}
+
+void prune_all_nodes(node_t** head_ptr) {
+    if (!*head_ptr) {
+        err_list_empty();
+        return;
+    }
+
+    node_t* active = *head_ptr;
+    while (active) {
+        node_t* next = active->next;
+        free(active->value);
+        free(active);
+        active = next;
+    }
+    *head_ptr = NULL;
 }
