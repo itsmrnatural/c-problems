@@ -130,19 +130,17 @@ bool setup_queens(struct Board* board) {
     if (board->used == board->n) return true;
 
     size_t size = board->n;
-    for (size_t i = 0; i < size; i++) {
-        for (size_t j = 0; j < size; j++) {
-            position candidate = {.row = i, .col = j};
-            if (can_be_attacked(board, candidate)) {
-                continue;
-            }
-
-            place_queen(board, candidate);
-            if (setup_queens(board)) return true;
-            remove_queen(board, candidate);
+    size_t row = board->used;  // Current row to place queen
+    for (size_t col = 0; col < size; col++) {
+        position candidate = {.row = row, .col = col};
+        if (can_be_attacked(board, candidate)) {
+            continue;
         }
-    }
 
+        place_queen(board, candidate);
+        if (setup_queens(board)) return true;
+        remove_queen(board, candidate);
+    }
     return false;
 }
 
@@ -160,9 +158,8 @@ int main(void) {
     srand((unsigned) time(NULL));
     struct Board board;
     struct Board* p_board = &board;
-    // printf("How many queens (n) should be place on a NxN board? ");
-    // scanf("%zu", &board.n);
-    board.n = 8;
+    printf("How many queens (n) should be place on a NxN board? ");
+    scanf("%zu", &board.n);
 
     // First queen is randomly place cause why not.
     size_t size = p_board->n;
