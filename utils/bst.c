@@ -4,15 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int8_t balance_factor(struct Node* root);
-
-void swap(int* a, int* b) {
-    int temp;
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 /* Intializes the BST and returns the pointer to root that you'll have to store. */
 struct Node* create_bst(void) {
     struct Node* root = (struct Node*) malloc(sizeof(struct Node));
@@ -69,9 +60,11 @@ struct Node* search(struct Node* root, int key) {
 }
 
 /* Returns the height of the tree (from the node). */
-size_t height(struct Node* root) {
-    if (!root) return 0;
-    return (1 + height(root->left) + height(root->right));
+size_t height(struct Node* node) {
+    if (!node) return 0;
+    size_t lheight = height(node->left);
+    size_t rheight = height(node->right);
+    return (1 + (lheight > rheight ? lheight : rheight));
 }
 
 /* Calculate and stores current balance factor for the node. */
@@ -134,28 +127,32 @@ struct Node* successor(struct Node* root) {
 
 /* Deletes a node by value simple. */
 void delete_node(struct Node* root, int key) {
-    // TODO change how predecessor and successor are determined after implementing
-    // TODO balancing factor
-
     if (!root) return;
 
     struct Node* target = search(root, key);
     if (!target->left && !target->right) {
+        struct Node* parent = target->parent;
+        if (parent->left == target) {
+            parent->left = NULL;
+        } else {
+            parent->right = NULL;
+        }
+        autobalance(parent);
         free(target);
     }
 
-    size_t height_left = height(target->left);
-    size_t height_right = height(target->right);
-
     struct Node* replacement;
-    if (height_left < height_right) {
+    int8_t bfactor = balance_factor(target);
+    if (bfactor < 0) {
         replacement = minimum(target->right);
     } else {
         replacement = maximum(target->left);
     }
 
     int new_key = replacement->data;
+    struct Node* parent = replacement->parent;
     delete_node(replacement, replacement->data);
+    autobalance(parent);
     target->data = new_key;
 }
 
@@ -193,13 +190,24 @@ void leftleft(struct Node* root) {
         Performed on a node with BF = +2
         with left child BF = +1/0
     */
-    struct Node* p_parent = root;
-    struct Node* p_child = p_parent->left;
+    struct Node* pivot = root->left;
+    struct Node* subtree = pivot->right;
+    struct Node* parent = root->parent;
 
-    swap(&p_child->data, &p_parent->data);
-    p_parent->right = p_child;
-    p_parent->left = p_child->left;
-    p_child->left = p_child->right;
+    root->left = subtree;
+    if (subtree) subtree->parent = root;
+    pivot->right = root;
+    pivot->parent = parent;
+    root->parent = pivot;
+    if (root) {
+        if (parent->left == root)
+            root->left = pivot;
+        else
+            root->right = pivot;
+    }
+    balance_factor(root);
+    balance_factor(pivot);
+    balance_factor(parent);
 }
 
 /* Peforms a left rotation on the node given to balance it. */
@@ -208,13 +216,24 @@ void rightright(struct Node* root) {
         Performed on a node with BF = -2
         with right child BF = -1/0
     */
-    struct Node* p_parent = root;
-    struct Node* p_child = p_parent->right;
+    struct Node* pivot = root->right;
+    struct Node* subtree = pivot->left;
+    struct Node* parent = root->parent;
 
-    swap(&p_child->data, &p_parent->data);
-    p_parent->left = p_child;
-    p_parent->right = p_child->right;
-    p_child->right = p_child->left;
+    root->right = subtree;
+    if (subtree) subtree->parent = root;
+    pivot->left = root;
+    pivot->parent = parent;
+    root->parent = pivot;
+    if (root) {
+        if (parent->left == root)
+            root->left = pivot;
+        else
+            root->right = pivot;
+    }
+    balance_factor(root);
+    balance_factor(pivot);
+    balance_factor(parent);
 }
 
 /* Peforms a left-right rotation on the node given to balance it. */
@@ -223,44 +242,34 @@ void leftright(struct Node* root) {
         Performed on a node with BF = +2
         with right child BF = -1/0
     */
-    struct Node* p_parent = root;
-    struct Node* p_child = p_parent->left;
-    struct Node* p_grandcl = p_child->right;
-
-    swap(&p_grandcl->data, &p_parent->data);
-    p_child->right = NULL;
-    p_parent->right = p_grandcl;
+    rightright(root->left);
+    leftleft(root);
 }
 
-/* Peforms a left-right rotation on the node given to balance it. */
+/* Peforms a right-left rotation on the node given to balance it. */
 void rightleft(struct Node* root) {
     /*
         Performed on a node with BF = -2
         with right child BF = +1/0
     */
-    struct Node* p_parent = root;
-    struct Node* p_child = p_parent->right;
-    struct Node* p_grandcl = p_child->left;
-
-    swap(&p_grandcl->data, &p_parent->data);
-    p_child->left = NULL;
-    p_parent->left = p_grandcl;
+    leftleft(root->right);
+    rightright(root);
 }
 
 /* Determines and returns the type of rotation_t need to balance the given node. */
 enum rotation_t rotation_type(struct Node* node) {
-    int8_t node_bfactor = node->bfactor;
-    int8_t lchild_bfactor = node->left->bfactor;
-    int8_t rchild_bfactor = node->right->bfactor;
+    int8_t node_bfactor = balance_factor(node);
+    int8_t lchild_bfactor = balance_factor(node->left);
+    int8_t rchild_bfactor = balance_factor(node->right);
 
     if (abs(node_bfactor) < 2) {
-        return NULL;
+        return NONE;
     } else if (node_bfactor == 2) {
         return (lchild_bfactor >= 0) ? LL : LR;
     } else if (node_bfactor == -2) {
         return (rchild_bfactor <= 0) ? RR : RL;
     }
-    return NULL;
+    return NONE;
 }
 
 /* Auto-balances the passed node with the required rotation. */

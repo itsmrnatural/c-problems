@@ -1,6 +1,5 @@
 #ifndef BST_H
 #define BST_H
-
 #include <stddef.h>
 #include <stdint.h>
 
@@ -12,10 +11,9 @@ struct Node {
     uint8_t bfactor;
 };
 
-enum rotation_t { LL, RR, LR, RL };
+enum rotation_t { LL, RR, LR, RL, NONE};
 enum child_t { LEFT, RIGHT };
 
-void swap(int* a, int* b);
 struct Node* create_bst(void);
 struct Node* insert(struct Node* root, int key);
 struct Node* search(struct Node* root, int key);
