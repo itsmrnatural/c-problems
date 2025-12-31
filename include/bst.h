@@ -33,7 +33,7 @@ void leftleft(struct Node* root);
 void rightright(struct Node* root);
 void leftright(struct Node* root);
 void rightleft(struct Node* root);
-enum rotation_t balance(struct Node* node);
+enum rotation_t balance_rotation(struct Node* node);
 void autobalance(struct Node* node);
 
 #endif

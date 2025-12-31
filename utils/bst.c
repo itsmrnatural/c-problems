@@ -13,6 +13,7 @@ void swap(int* a, int* b) {
     *b = temp;
 }
 
+/* Intializes the BST and returns the pointer to root that you'll have to store. */
 struct Node* create_bst(void) {
     struct Node* root = (struct Node*) malloc(sizeof(struct Node));
     if (!root) {
@@ -30,14 +31,17 @@ struct Node* insert(struct Node* root, int key) {
             fprintf(stderr, "Memory allocation failed for new node.\n");
             return NULL;
         }
-        root->data = key;
-        root->left = NULL;
-        root->right = NULL;
-        root->parent = NULL;
+        new_leaf->data = key;
+        new_leaf->left = NULL;
+        new_leaf->right = NULL;
+        new_leaf->parent = NULL;
         return new_leaf;
     }
 
-    if (key < root->data) {
+    if (key == root->data) {
+        fprintf(stderr, "Can't insert duplicate values in the BST.");
+        return root;
+    } else if (key < root->data) {
         root->left = insert(root->left, key);
         root->left->parent = root;  // In my words, umblicating the child
     } else {
@@ -53,7 +57,8 @@ struct Node* insert(struct Node* root, int key) {
 
 /* Returns (struct Node*) pointer to the node with matched value. */
 struct Node* search(struct Node* root, int key) {
-    if (!root || root->data == key) {
+    if (!root) return NULL;
+    if (root->data == key) {
         return root;
     }
 
@@ -71,6 +76,7 @@ size_t height(struct Node* root) {
 
 /* Calculate and stores current balance factor for the node. */
 int8_t balance_factor(struct Node* root) {
+    if (!root) return 0;
     root->bfactor = (height(root->left) - height(root->right));
     return root->bfactor;
 }
@@ -193,6 +199,7 @@ void leftleft(struct Node* root) {
     swap(&p_child->data, &p_parent->data);
     p_parent->right = p_child;
     p_parent->left = p_child->left;
+    p_child->left = p_child->right;
 }
 
 /* Peforms a left rotation on the node given to balance it. */
@@ -207,6 +214,7 @@ void rightright(struct Node* root) {
     swap(&p_child->data, &p_parent->data);
     p_parent->left = p_child;
     p_parent->right = p_child->right;
+    p_child->right = p_child->left;
 }
 
 /* Peforms a left-right rotation on the node given to balance it. */
@@ -240,7 +248,7 @@ void rightleft(struct Node* root) {
 }
 
 /* Determines and returns the type of rotation_t need to balance the given node. */
-enum rotation_t balance(struct Node* node) {
+enum rotation_t rotation_type(struct Node* node) {
     int8_t node_bfactor = node->bfactor;
     int8_t lchild_bfactor = node->left->bfactor;
     int8_t rchild_bfactor = node->right->bfactor;
@@ -257,7 +265,7 @@ enum rotation_t balance(struct Node* node) {
 
 /* Auto-balances the passed node with the required rotation. */
 void autobalance(struct Node* node) {
-    enum rotation_t rotation = balance(node);
+    enum rotation_t rotation = rotation_type(node);
     switch (rotation) {
         case LL:
             leftleft(node);
@@ -266,10 +274,10 @@ void autobalance(struct Node* node) {
             leftright(node);
             break;
         case RR:
-            leftright(node);
+            rightright(node);
             break;
         case RL:
-            leftright(node);
+            rightleft(node);
             break;
         default:
             // Node doesn't need balancing
