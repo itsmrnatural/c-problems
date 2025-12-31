@@ -6,12 +6,7 @@
 
 /* Intializes the BST and returns the pointer to root that you'll have to store. */
 struct Node* create_bst(void) {
-    struct Node* root = (struct Node*) malloc(sizeof(struct Node));
-    if (!root) {
-        fprintf(stderr, "Memory allocation failed for BST.\n");
-        return NULL;
-    }
-    return root;
+    return NULL;
 }
 
 /* Returns the root. */
@@ -41,7 +36,7 @@ struct Node* insert(struct Node* root, int key) {
     }
     int8_t node_bfactor = balance_factor(root);
     if (abs(node_bfactor) >= 2) {
-        autobalance(root);
+        root = autobalance(root);
     }
     return root;
 }
@@ -91,17 +86,20 @@ struct Node* minimum(struct Node* node) {
 /* Finds the inorder predecessor of a node. */
 struct Node* predecessor(struct Node* root) {
     if (!root->left) {
-        struct Node* p_child = root;
-        struct Node* p_parent = root->parent;
+        struct Node* child = root;
+        struct Node* parent = root->parent;
+        if (!parent) return NULL;
 
-        int child_data = p_child->data;
-        int parent_data = p_parent->data;
+        int child_data = child->data;
+        int parent_data = parent->data;
         while (child_data < parent_data) {
-            p_child = p_parent;
-            p_parent = p_child->parent;
-            if (!p_parent) return NULL;  // Probably the upmost root arrived
+            child = parent;
+            parent = child->parent;
+            child_data = child->data;
+            parent_data = parent->data;
+            if (!parent) return NULL;  // Probably the upmost root arrived
         }
-        return p_parent;  // This is the inorder predecessor of root node.
+        return parent;  // This is the inorder predecessor of root node.
     }
     return maximum(root->left);
 }
@@ -109,19 +107,21 @@ struct Node* predecessor(struct Node* root) {
 /* Finds the inorder succesor of a node. */
 struct Node* successor(struct Node* root) {
     if (!root->right) {
-        struct Node* p_child = root;
-        struct Node* p_parent = root->parent;
+        struct Node* child = root;
+        struct Node* parent = root->parent;
+        if (!parent) return NULL;
 
-        int child_data = p_child->data;
-        int parent_data = p_parent->data;
+        int child_data = child->data;
+        int parent_data = parent->data;
         while (child_data > parent_data) {
-            p_child = p_parent;
-            p_parent = p_child->parent;
-            if (!p_parent) return NULL;  // Probably the upmost root arrived
+            child = parent;
+            parent = child->parent;
+            child_data = child->data;
+            parent_data = parent->data;
+            if (!parent) return NULL;  // Probably the upmost root arrived
         }
-        return p_parent;  // This is the inorder successor of root node.
+        return parent;  // This is the inorder successor of root node.
     }
-
     return minimum(root->right);
 }
 
@@ -130,15 +130,26 @@ void delete_node(struct Node* root, int key) {
     if (!root) return;
 
     struct Node* target = search(root, key);
+    if (!target) {
+        fprintf(stderr, "Can't delete key which doesn't exist.");
+        return;
+    }
+
     if (!target->left && !target->right) {
         struct Node* parent = target->parent;
-        if (parent->left == target) {
-            parent->left = NULL;
-        } else {
-            parent->right = NULL;
+        if (parent) {
+            if (parent->left == target) {
+                parent->left = NULL;
+            } else {
+                parent->right = NULL;
+            }
+            while (parent) {
+                parent = autobalance(parent);
+                parent = parent->parent;
+            }
         }
-        autobalance(parent);
         free(target);
+        return;
     }
 
     struct Node* replacement;
@@ -152,7 +163,10 @@ void delete_node(struct Node* root, int key) {
     int new_key = replacement->data;
     struct Node* parent = replacement->parent;
     delete_node(replacement, replacement->data);
-    autobalance(parent);
+    while (parent) {
+        parent = autobalance(parent);
+        parent = parent->parent;
+    }
     target->data = new_key;
 }
 
@@ -162,7 +176,7 @@ void inorder_trav(struct Node* root) {
     if (!root) return;
 
     inorder_trav(root->left);
-    printf("%d", root->data);
+    printf("%d ", root->data);
     inorder_trav(root->right);
 }
 
@@ -170,7 +184,7 @@ void inorder_trav(struct Node* root) {
 void preorder_trav(struct Node* root) {
     if (!root) return;
 
-    printf("%d", root->data);
+    printf("%d ", root->data);
     preorder_trav(root->left);
     preorder_trav(root->right);
 }
@@ -181,7 +195,7 @@ void postorder_trav(struct Node* root) {
 
     postorder_trav(root->left);
     postorder_trav(root->right);
-    printf("%d", root->data);
+    printf("%d ", root->data);
 }
 
 /* Peforms a right rotation on the node given to balance it. */
@@ -199,11 +213,11 @@ void leftleft(struct Node* root) {
     pivot->right = root;
     pivot->parent = parent;
     root->parent = pivot;
-    if (root) {
+    if (parent) {
         if (parent->left == root)
-            root->left = pivot;
+            parent->left = pivot;
         else
-            root->right = pivot;
+            parent->right = pivot;
     }
     balance_factor(root);
     balance_factor(pivot);
@@ -225,11 +239,11 @@ void rightright(struct Node* root) {
     pivot->left = root;
     pivot->parent = parent;
     root->parent = pivot;
-    if (root) {
+    if (parent) {
         if (parent->left == root)
-            root->left = pivot;
+            parent->left = pivot;
         else
-            root->right = pivot;
+            parent->right = pivot;
     }
     balance_factor(root);
     balance_factor(pivot);
@@ -273,23 +287,23 @@ enum rotation_t rotation_type(struct Node* node) {
 }
 
 /* Auto-balances the passed node with the required rotation. */
-void autobalance(struct Node* node) {
+struct Node* autobalance(struct Node* node) {
     enum rotation_t rotation = rotation_type(node);
     switch (rotation) {
         case LL:
             leftleft(node);
-            break;
+            return node->parent ? node->parent : node;
         case LR:
             leftright(node);
-            break;
+            return node->parent ? node->parent : node;
         case RR:
             rightright(node);
-            break;
+            return node->parent ? node->parent : node;
         case RL:
             rightleft(node);
-            break;
+            return node->parent ? node->parent : node;
         default:
             // Node doesn't need balancing
-            return;
+            return node;
     }
 }
