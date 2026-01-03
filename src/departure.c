@@ -40,7 +40,6 @@ int main(void) {
         }
     }
 
-    // Format and display results
     int dep_hours, dep_mins, arrv_hours, arrv_mins;
     char dep_meridian, arrv_meridian;
 

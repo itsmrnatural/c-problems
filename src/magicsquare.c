@@ -21,20 +21,13 @@ void initSq(int n, int magicSq[n][n]) {
 
 void fillSq(int n, int magicSq[n][n]) {
     int a = 1;  // From a to n^2
-
     for (int i = 0, j = n / 2; a <= (n * n); a++) {
         magicSq[i][j] = a;
         i--, j++;  // ex: (0, 3) -> (-1, 4)
 
         // Wrapping logic
-        if (i < 0) {
-            // i: leaves from top returns from bottom
-            i = n - 1;
-        }
-        if (j > n - 1) {
-            // j: leaves from right returns from left
-            j -= n;
-        }
+        if (i < 0) i = n - 1;   // i: leaves from top returns from bottom
+        if (j > n - 1) j -= n;  // j: leaves from right returns from left
 
         // If next filled, drop below
         if (magicSq[i][j] != 0) {
@@ -42,23 +35,12 @@ void fillSq(int n, int magicSq[n][n]) {
             j--;
         }
 
-        // 2nd Wrapping logic
-        // Caused by dropping after checking occupancy
-        if (i > n - 1) {
-            // i: leaves from bottom returns from top
-            i -= n;
-        }
-        if (j < 0) {
-            // j: leaves from left returns from right
-            //? Not caused by the mathematics, but the limitations of this
-            // program
-            j = n - 1;
-        }
-        // printf("%d -> (%d, %d)\n", a + 1, i, j);
+        // 2nd Wrapping logic (caused by dropping after checking occupancy)
+        if (i > n - 1) i -= n;  // i: leaves from bottom returns from top
+        if (j < 0) j = n - 1;   // j: leaves from left returns from right
 
         //! Logic trap (4, 0) -> (6, -1) -> (0, 4)
-        // Fix: do not set i/j = 0, but use subtraction to remove them from out
-        // of bounds
+        // Fix: use subtraction to remove out of bounds, instead of i/j=0
     }
 }
 

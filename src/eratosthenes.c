@@ -74,14 +74,10 @@ bool* eratosthenes(long num) {
     }
 
     for (int i = 2; i * i <= num; i++) {
-        if (primetable[i - 1] == false) {
-            continue;
-        }
-
+        if (primetable[i - 1] == false) continue;
         for (int j = i * i; j <= num; j += i) {
             primetable[j - 1] = false;
         }
     }
-
     return primetable;
 }
