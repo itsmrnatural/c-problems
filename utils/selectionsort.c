@@ -27,10 +27,10 @@ int findSmallest(int* arr, int size) {
 }
 
 int* selectionSort(int* arr, int size) {
-    int* sortedArray = (int*) malloc(size);
+    int* sortedArray = (int*) malloc(size * sizeof(int));
 
     int msize = size;
-    for (int i = 0; i < size - 1; i++) {
+    for (int i = 0; i < size; i++) {
         int si = findSmallest(arr, msize);
         sortedArray[i] = arr[si];
         removeElement(arr, &msize, si);  // Deletes the smallest element from the original array.
