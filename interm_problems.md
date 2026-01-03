@@ -384,6 +384,178 @@ A^T (3x2):
 
 ---
 
+---
+
+## 11. 📋 **Bloom Filter Implementation** (Hashing + Bit Manipulation + Probabilistic DS)
+
+**Difficulty:** Medium-Hard | **Time to solve:** 3-5 hours | **Concepts:** Hashing, bit arrays, probability, false positives
+
+**Problem:**
+Implement a Bloom filter — a space-efficient probabilistic data structure that tells you "definitely not in the set" or "possibly in the set" (with false positives). Perfect for learning about hashing and bit manipulation!
+
+**Requirements:**
+
+- Create a bit array of size M (e.g., 1024 bits)
+- Implement K different hash functions (e.g., 3-5 hashes)
+- `bloom_add(filter, item)`: Hash item K times, set those bits to 1
+- `bloom_check(filter, item)`: Hash item K times, check if ALL bits are 1
+  - If any bit is 0 → definitely NOT in set
+  - If all bits are 1 → probably in set (might be false positive)
+- Calculate false positive rate as items are added
+- Test with dictionary words, track accuracy
+
+**Think about:**
+
+- Why does this use less memory than a hash table?
+- What causes false positives? (bits colliding)
+- How do K and M affect false positive rate?
+- Can you ever remove items? (No! Why not?)
+
+**Hash Function Ideas:**
+- Use multiple variations: FNV-1a with different seeds
+- Or: `hash1(x)`, `hash2(x) = hash1(x) + i`, `hash3(x) = hash1(x) + 2i`...
+
+**Example Output:**
+
+```
+Bloom Filter: 1024 bits, 4 hash functions
+
+Adding 100 words...
+Added: cat, dog, bird, fish, ...
+
+Testing membership:
+"cat" -> POSSIBLY IN SET ✓
+"xyz" -> DEFINITELY NOT IN SET ✓
+"rat" -> POSSIBLY IN SET (FALSE POSITIVE!) ✗
+
+After 100 items:
+False positive rate: 2.3%
+
+After 500 items:
+False positive rate: 18.7%
+```
+
+**Extension (Hard):**
+
+- Implement a Counting Bloom Filter (allows deletion by using counters instead of bits)
+- Calculate optimal M and K given expected items N and target false positive rate
+- Use this to build a spell-checker (dictionary in bloom filter)
+
+**Why This Is Cool:**
+
+Real-world uses: spell-checkers, caching systems, databases (checking if data exists before disk read), blockchain, Chrome's malicious URL detection. Trade accuracy for massive memory savings!
+
+---
+
+## 12. 📋 **Trie (Prefix Tree) for Autocomplete** (Trees + String Processing)
+
+**Difficulty:** Medium-Hard | **Time to solve:** 3-4 hours | **Concepts:** Trees, strings, prefix matching
+
+**Problem:**
+Implement a Trie (prefix tree) data structure for efficient string storage and retrieval. Perfect for autocomplete, spell-checking, and IP routing!
+
+**Requirements:**
+
+- Node structure: 26 child pointers (for 'a'-'z'), boolean `is_end_of_word`
+- `trie_insert(root, word)`: Add a word to the trie
+- `trie_search(root, word)`: Check if exact word exists
+- `trie_starts_with(root, prefix)`: Check if any word has this prefix
+- `trie_autocomplete(root, prefix)`: Return all words with given prefix
+- Handle case-insensitive search
+- Free all memory when done
+
+**Think about:**
+
+- How is this different from a hash table?
+- Why is prefix search O(k) where k = prefix length?
+- What's the space tradeoff? (many pointers per node)
+- How do you collect all words with a given prefix? (DFS from prefix node)
+
+**Example Usage:**
+
+```
+Insert: "cat", "car", "card", "care", "careful", "dog"
+
+Search "car" -> Found ✓
+Search "cart" -> Not found ✗
+Starts with "car" -> Yes ✓
+
+Autocomplete "car":
+- car
+- card
+- care
+- careful
+
+Autocomplete "d":
+- dog
+```
+
+**Extension (Hard):**
+
+- Add `trie_delete(word)` - remove a word
+- Count how many words share each prefix
+- Implement compressed trie (radix tree) to save space
+- Build a T9 predictive text system (phone keypad)
+
+**Why This Is Cool:**
+
+Used in: autocomplete systems, IP routing tables, genome sequence analysis, search engines. Extremely fast for prefix operations!
+
+---
+
+## 13. 📋 **Skip List** (Probabilistic Data Structure)
+
+**Difficulty:** Medium-Hard | **Time to solve:** 3-5 hours | **Concepts:** Linked lists, randomization, multi-level indexing
+
+**Problem:**
+Implement a Skip List — a probabilistic alternative to balanced trees that uses multiple levels of linked lists for fast O(log n) operations.
+
+**Requirements:**
+
+- Node structure: value + array of forward pointers (one per level)
+- Max levels: 16 (probability of promotion: 0.5)
+- `skiplist_insert(list, value)`: Add value, randomly determine height
+- `skiplist_search(list, value)`: Find value in O(log n) expected time
+- `skiplist_delete(list, value)`: Remove value
+- Print each level to visualize structure
+- Compare performance vs regular linked list
+
+**Think about:**
+
+- How does randomization achieve O(log n)?
+- Why is this simpler than AVL/Red-Black trees?
+- What's the coin flip logic? (50% chance to promote to next level)
+- How do you traverse levels efficiently?
+
+**Example Output:**
+
+```
+Skip List after insertions:
+Level 3: 1 ----------> 9 -> NULL
+Level 2: 1 -----> 5 -> 9 -> NULL
+Level 1: 1 -> 3 -> 5 -> 9 -> 12 -> NULL
+Level 0: 1 -> 3 -> 5 -> 7 -> 9 -> 12 -> 15 -> NULL
+
+Search 7:
+- Start at level 3, head
+- Jump to level 0
+- Found at level 0 ✓
+
+Operations: 3 steps (vs 7 for regular linked list)
+```
+
+**Extension (Hard):**
+
+- Implement rank queries (find kth smallest element)
+- Add range queries (find all values between x and y)
+- Concurrent skip list with locks (thread-safe)
+
+**Why This Is Cool:**
+
+Used in: Redis sorted sets, LevelDB/RocksDB, concurrent data structures. Easier to implement than balanced trees but similar performance!
+
+---
+
 ## My Recommendation
 
 **Pick 2-3 of these based on interest:**
@@ -399,6 +571,9 @@ A^T (3x2):
 - Linked list
 - Word frequency counter
 - Pascal's triangle
+- **Bloom filter** ← New! Teaches hashing + bit manipulation
+- **Trie** ← New! Prefix tree for string operations
+- **Skip list** ← New! Probabilistic alternative to balanced trees
 
 **If you like getting things to work:**
 
